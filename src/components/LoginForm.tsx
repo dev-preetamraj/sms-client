@@ -54,13 +54,13 @@ const LoginForm = ({ role }: Props) => {
     })
       .unwrap()
       .then((res) => {
+        localStorage.access_token = res.data.access_token;
+        localStorage.refresh_token = res.data.refresh_token;
         toast.success(res.message);
-        console.log(urlBuilder(role));
-
         router.push(urlBuilder(role));
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((err: { data: LoginResponse }) => {
+        toast.error(err.data.message);
       });
   };
 
